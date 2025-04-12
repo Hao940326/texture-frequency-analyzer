@@ -69,14 +69,14 @@ if uploaded_files and len(uploaded_files) >= 2:
     pca = PCA(n_components=2)
     pca_features = pca.fit_transform(features)
 
-    st.subheader("📈 分類視覺化（PCA 降維）")
+    st.subheader("📈 Classification Visualization (PCA Dimensionality Reduction)")
     fig, ax = plt.subplots(figsize=(10, 8))  # 增加圖表大小以確保顯示不擁擠
     for i in range(len(pca_features)):
         ax.scatter(pca_features[i, 0], pca_features[i, 1], c=f'C{labels[i]}', label=categories[labels[i]] if i == 0 else "")
         ax.text(pca_features[i, 0] + 0.01, pca_features[i, 1], filenames[i], fontsize=8, ha='left', va='bottom')
     ax.set_xlabel("PC1")
     ax.set_ylabel("PC2")
-    ax.set_title("頻域統計特徵 - PCA 視覺化")
+    ax.set_title("Frequency Domain Statistical Features - PCA Visualization")
     ax.grid(True)
     ax.legend(loc="upper left", fontsize=10)  # 顯示分類圖例
 
