@@ -9,8 +9,8 @@ from io import BytesIO
 from PIL import Image
 import matplotlib
 
-# 設置 Matplotlib 支持中文
-matplotlib.rcParams['font.family'] = 'SimHei'  # 使用黑體字體
+# 設置 Matplotlib 支持中文，並使用合適的字體
+matplotlib.rcParams['font.family'] = 'Microsoft YaHei'  # 嘗試使用微軟正黑體
 matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
 
 # 網頁設定
