@@ -33,14 +33,20 @@ def extract_frequency_features(image_array):
 
     return [mean_val, std_val, skew_val, kurt_val, high_freq_ratio], magnitude
 
-# 分類標籤
+# 更新後的分類邏輯：規則、不規則、隨機
 def assign_label(features):
-    # 假設通過 KMeans 分類會分成 3 類，這裡將根據結果來設計名稱
-    if features[1] < 0.5:  # 規則
+    mean_val, std_val, skew_val, kurt_val, high_freq_ratio = features
+
+    # 規則紋理的特徵條件：
+    if high_freq_ratio > 0.2 and skew_val < 0.2 and kurt_val > 3:  
         return "規則"
-    elif features[3] > 3:  # 不規則
+    
+    # 不規則紋理的特徵條件：
+    elif kurt_val < 3 and skew_val > 0.5:
         return "不規則"
-    else:  # 隨機
+
+    # 隨機紋理的特徵條件：
+    else:
         return "隨機"
 
 # 分析流程
