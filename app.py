@@ -57,6 +57,9 @@ if uploaded_files and len(uploaded_files) >= 2:
     kmeans = KMeans(n_clusters=num_clusters, random_state=42)
     labels = kmeans.fit_predict(features)
 
+    # 定義分類對應名稱
+    categories = {0: "隨機", 1: "規則", 2: "不規則"}  # 定義分類對應的名稱
+
     # PCA 降維視覺化
     pca = PCA(n_components=2)
     pca_features = pca.fit_transform(features)
@@ -79,7 +82,7 @@ if uploaded_files and len(uploaded_files) >= 2:
         with col1:
             st.image(images[i], caption=f"{filenames[i]}", use_column_width=True)
         with col2:
-            st.markdown(f"**分類結果：類別 {labels[i]}**")
+            st.markdown(f"**分類結果：{categories[labels[i]]}**")  # 使用對應的分類名稱
             st.markdown("**頻域統計特徵：**")
             st.json({
                 "Mean": round(features[i][0], 2),
