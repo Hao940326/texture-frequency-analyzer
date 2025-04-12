@@ -7,6 +7,11 @@ from scipy.stats import skew, kurtosis
 import matplotlib.pyplot as plt
 from io import BytesIO
 from PIL import Image
+import matplotlib
+
+# 設置 Matplotlib 支持中文
+matplotlib.rcParams['font.family'] = 'SimHei'  # 使用黑體字體
+matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
 
 # 網頁設定
 st.set_page_config(page_title="頻域紋理分類工具", layout="wide")
