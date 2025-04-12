@@ -33,6 +33,16 @@ def extract_frequency_features(image_array):
 
     return [mean_val, std_val, skew_val, kurt_val, high_freq_ratio], magnitude
 
+# 分類標籤
+def assign_label(features):
+    # 假設通過 KMeans 分類會分成 3 類，這裡將根據結果來設計名稱
+    if features[1] < 0.5:  # 規則
+        return "規則"
+    elif features[3] > 3:  # 不規則
+        return "不規則"
+    else:  # 隨機
+        return "隨機"
+
 # 分析流程
 if uploaded_files and len(uploaded_files) >= 2:
     st.success("✅ 開始進行分析與分類...")
@@ -57,6 +67,9 @@ if uploaded_files and len(uploaded_files) >= 2:
     kmeans = KMeans(n_clusters=num_clusters, random_state=42)
     labels = kmeans.fit_predict(features)
 
+    # 分配每張圖片的類別（規則、不規則、隨機）
+    assigned_labels = [assign_label(feat) for feat in features]
+
     # PCA 降維視覺化
     pca = PCA(n_components=2)
     pca_features = pca.fit_transform(features)
@@ -79,7 +92,7 @@ if uploaded_files and len(uploaded_files) >= 2:
         with col1:
             st.image(images[i], caption=f"{filenames[i]}", use_column_width=True)
         with col2:
-            st.markdown(f"**分類結果：類別 {labels[i]}**")
+            st.markdown(f"**分類結果：{assigned_labels[i]}**")
             st.markdown("**頻域統計特徵：**")
             st.json({
                 "Mean": round(features[i][0], 2),
