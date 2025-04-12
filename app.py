@@ -33,19 +33,19 @@ def extract_frequency_features(image_array):
 
     return [mean_val, std_val, skew_val, kurt_val, high_freq_ratio], magnitude
 
-# 更新後的分類邏輯：規則、不規則、隨機
+# 分類邏輯：規則、不規則、隨機
 def assign_label(features):
     mean_val, std_val, skew_val, kurt_val, high_freq_ratio = features
 
-    # 規則紋理的特徵條件：
-    if high_freq_ratio > 0.2 and skew_val < 0.2 and kurt_val > 3:  
+    # 規則紋理的特徵條件
+    if high_freq_ratio > 0.2 and skew_val < 0.2 and kurt_val > 3:
         return "規則"
-    
-    # 不規則紋理的特徵條件：
+
+    # 不規則紋理的特徵條件
     elif kurt_val < 3 and skew_val > 0.5:
         return "不規則"
 
-    # 隨機紋理的特徵條件：
+    # 隨機紋理的特徵條件
     else:
         return "隨機"
 
@@ -73,7 +73,7 @@ if uploaded_files and len(uploaded_files) >= 2:
     kmeans = KMeans(n_clusters=num_clusters, random_state=42)
     labels = kmeans.fit_predict(features)
 
-    # 分配每張圖片的類別（規則、不規則、隨機）
+    # 用 assign_label 函式來分類每張圖
     assigned_labels = [assign_label(feat) for feat in features]
 
     # PCA 降維視覺化
